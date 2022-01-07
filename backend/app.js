@@ -1,6 +1,14 @@
 const express = require("express");
 const app = express();
 
+const DB = `mongodb+srv://anjula:<${process.env.PASSWORD}>@cluster0.xyokn.mongodb.net/mernstack?retryWrites=true&w=majority`;
+
+// middleware, include function that checks the condition and implement it before doing any request action.
+const middleware = (req, res, next) => {
+  console.log("check the user authentication");
+  next();
+};
+
 //routing for homepage
 app.get("/", (req, res) => {
   res.send("Hello world");
@@ -12,7 +20,7 @@ app.get("/contact", (req, res) => {
 });
 
 //routing for About page
-app.get("/about", (req, res) => {
+app.get("/about", middleware, (req, res) => {
   res.send("Hello About Page");
 });
 
