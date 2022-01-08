@@ -1,8 +1,15 @@
+const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
+const dotenv = require("dotenv");
 
-const DB = process.env.DATABASE;
-// middleware, include function that checks the condition and implement it before doing any request action.
+//once included in app.js acess from anywhere
+dotenv.config({ path: "./config.env" });
+require("./database/connection");
+
+const PORT = process.env.PORT;
+
+// middleware, include function that checks the condition and perform it before doing any request action.
 const middleware = (req, res, next) => {
   console.log("check the user authentication");
   next();
@@ -33,6 +40,6 @@ app.get("/signin", (req, res) => {
   res.send("Hello Signin Page");
 });
 
-app.listen(3000, () => {
-  console.log(`Server is running at localhost 3000`);
+app.listen(PORT, () => {
+  console.log(`Server is running at localhost ${PORT}`);
 });
