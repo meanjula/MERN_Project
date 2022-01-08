@@ -1,8 +1,7 @@
 const express = require("express");
 const app = express();
 
-const DB = `mongodb+srv://anjula:<${process.env.PASSWORD}>@cluster0.xyokn.mongodb.net/mernstack?retryWrites=true&w=majority`;
-
+const DB = process.env.DATABASE;
 // middleware, include function that checks the condition and implement it before doing any request action.
 const middleware = (req, res, next) => {
   console.log("check the user authentication");
