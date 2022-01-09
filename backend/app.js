@@ -5,7 +5,13 @@ const dotenv = require("dotenv");
 
 //once included in app.js acess from anywhere
 dotenv.config({ path: "./config.env" });
+
 require("./database/connection");
+// const User = require("./model/userSchema");
+
+//use middleware
+app.use(express.json()); //parse json data that is posted by user.
+app.use(require("./router/authentication"));
 
 const PORT = process.env.PORT;
 
@@ -16,9 +22,9 @@ const middleware = (req, res, next) => {
 };
 
 //routing for homepage
-app.get("/", (req, res) => {
-  res.send("Hello world");
-});
+// app.get("/", (req, res) => {
+//   res.send("Hello world");
+// });
 
 //routing for Contact page
 app.get("/contact", (req, res) => {

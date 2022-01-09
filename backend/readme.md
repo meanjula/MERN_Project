@@ -2,23 +2,20 @@
 
 ## Backend
 
-- install node modules
+- initalize the project by installing node modules and express server
 
 ```shell
 npm install
-```
-
-```shell
 npm install express
 ```
 
-- for using mongodb database install mongoose
+- Using mongodb database install mongoose
 
 ```shell
 npm install mongoose
 ```
 
-- for loading env variable
+- loading environment variables from a .env file into process.env
 
 ```shell
 npm install dotenv
@@ -38,7 +35,7 @@ const middleware = (req, res, next) => {
 - create routing for all pages
 
   - Home page
-  - About page
+  - About page (with middleware)
   - Contact page
   - Signup page
   - Signin page
@@ -61,3 +58,19 @@ app.listen(PORT, () => {
 ### Model
 
 #### UserSchema.js
+
+- creating userSchema and model
+  - define the json format with schema
+
+### Router
+
+#### authentication.js
+
+- create router
+- create post request for getting data posted by user
+- getting data back from postman as a form data.
+  - download postman
+  - create new collection in postman
+  - include in header (content-Type:application/json)
+  - inside body select row and then write user input data as in userSchema format.
+  - send data to applicartion
