@@ -10,7 +10,7 @@ require("./database/connection");
 // const User = require("./model/userSchema");
 
 //use middleware
-app.use(express.json()); //parse json data that is posted by user.
+app.use(express.json()); //parsing json data posted by user.
 app.use(require("./router/authentication"));
 
 const PORT = process.env.PORT;

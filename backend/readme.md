@@ -67,10 +67,14 @@ app.listen(PORT, () => {
 #### authentication.js
 
 - create router
-- create post request for getting data posted by user
-- getting data back from postman as a form data.
-  - download postman
-  - create new collection in postman
-  - include in header (content-Type:application/json)
-  - inside body select row and then write user input data as in userSchema format.
-  - send data to applicartion
+- create post request for getting data posted by user(inside postman)
+
+##### postman
+
+- download postman
+- create new collection in postman
+- include in header (content-Type:application/json)
+- inside body select row and then write user input data as in userSchema format.
+- send data to application
+
+- retrieve user input and store in databse using post request and promises.
