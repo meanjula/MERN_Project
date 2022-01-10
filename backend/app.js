@@ -37,7 +37,7 @@ app.get("/about", middleware, (req, res) => {
 });
 
 //routing for Signup page
-app.get("/signup", (req, res) => {
+app.get("/register", (req, res) => {
   res.send("Hello Signup Page");
 });
 

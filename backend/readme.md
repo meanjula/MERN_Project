@@ -77,4 +77,16 @@ app.listen(PORT, () => {
 - inside body select row and then write user input data as in userSchema format.
 - send data to application
 
-- retrieve user input and store in databse using post request and promises.
+- retrieve user input and store in databse using post request and promises/async await.
+- posting conditions
+  - no empty fields
+  - if email exist reject with err message else post data
+
+##### login route
+
+- conditions for login
+  - no empty fields
+  - email must be registered already(invalid details error)
+  - password should be matched
+
+##### hashing

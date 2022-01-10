@@ -58,8 +58,7 @@ const User = require("../model/userSchema");
 //     .catch((err) => console.log(err));
 // });
 
-//storing data to databse using async await
-
+//after registration storing data to databse using async await
 router.post("/register", async (req, res) => {
   const { first, last, username, email, phone, role, password, repassword } =
     req.body;
@@ -98,8 +97,31 @@ router.post("/register", async (req, res) => {
   } catch (err) {
     console.log(err);
   }
+});
 
-  //using promises if email exist in databse return err else save data in databse
+// login route and validation
+
+router.post("/signin", async (req, res) => {
+  // console.log(req.body);
+  // res.json({ message: "awesome" }); // for checking route working or not
+  try {
+    const { email, password } = req.body;
+    //checking for empty field
+    if (!email || !password) {
+      return res.status(422).json({ error: "please fill the field" });
+    }
+    const userlogin = await User.findOne({ email: email }); //
+    console.log(userlogin);
+
+    //checking user with already existed email
+    if (!userlogin) {
+      res.json({ message: "user not exist" });
+    } else {
+      res.json({ message: "signin successfully" });
+    }
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 module.exports = router;
