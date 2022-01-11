@@ -62,6 +62,17 @@ app.listen(PORT, () => {
 - creating userSchema and model
   - define the json format with schema
 
+##### password hashing
+
+- install bcryptjs
+
+```shell
+npm i bcryptjs
+```
+
+- pre save middleware should be executed to do password hashing and done before calling save method.
+- notes:post save middleware send email when user account is created and done after save method
+
 ### Router
 
 #### authentication.js
@@ -88,5 +99,3 @@ app.listen(PORT, () => {
   - no empty fields
   - email must be registered already(invalid details error)
   - password should be matched
-
-##### hashing

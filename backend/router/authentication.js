@@ -1,7 +1,6 @@
 const express = require("express");
-
 const router = express.Router();
-
+const bcrypt = require("bcryptjs");
 //routing for homepage
 router.get("/", (req, res) => {
   res.send("Hello world from router");
@@ -81,6 +80,7 @@ router.post("/register", async (req, res) => {
     if (userExist) {
       return res.status(422).json({ error: "email already exist" });
     }
+
     // create user collection
     const user = new User({
       first,
@@ -92,8 +92,11 @@ router.post("/register", async (req, res) => {
       password,
       repassword,
     });
+
     await user.save();
     res.status(201).json({ message: "registered successfully" });
+
+    //post save middleware
   } catch (err) {
     console.log(err);
   }
@@ -103,25 +106,34 @@ router.post("/register", async (req, res) => {
 
 router.post("/signin", async (req, res) => {
   // console.log(req.body);
-  // res.json({ message: "awesome" }); // for checking route working or not
+  // res.json({ message: "signin  route working" }); // for checking route working or not
   try {
     const { email, password } = req.body;
     //checking for empty field
     if (!email || !password) {
       return res.status(422).json({ error: "please fill the field" });
     }
-    const userlogin = await User.findOne({ email: email }); //
-    console.log(userlogin);
 
-    //checking user with already existed email
-    if (!userlogin) {
-      res.json({ message: "user not exist" });
+    //checking email
+    const userlogin = await User.findOne({ email: email }); //
+
+    //userlogin have all user data from backend
+    if (userlogin) {
+      // comparing between backend password and currently typed password
+      const isMatch = await bcrypt.compare(password, userlogin.password);
+      if (!isMatch) {
+        res.status(400).json({ error: "Invalid credentials pass" });
+      } else {
+        res.json({ message: "signin successfully" });
+      }
     } else {
-      res.json({ message: "signin successfully" });
+      res.status(400).json({ error: "Invalid credentials" });
     }
   } catch (err) {
     console.log(err);
   }
 });
+
+// password hashing()
 
 module.exports = router;
