@@ -35,9 +35,9 @@ const middleware = (req, res, next) => {
 - create routing for all pages
 
   - Home page
-  - About page (with middleware)
+  - About page
   - Contact page
-  - Signup page
+  - Register page
   - Signin page
 
 - At last Make the server listen
@@ -52,15 +52,15 @@ app.listen(PORT, () => {
 
 #### Connection.js
 
-- With the help of mongoose, databse is connected with the application using mongodb databse uri.
-- Secure the database uri and password by including it in .env file, which is git ignored.
+- Databse is connected with the application using mongodb databse uri.
+- Secure the database uri and password by including it in .env file and git ignore it.
 
 ### Model
 
 #### UserSchema.js
 
 - creating userSchema and model
-  - define the json format with schema
+  - define the json data format with schema
 
 ##### password hashing
 
@@ -89,13 +89,30 @@ npm i bcryptjs
 - send data to application
 
 - retrieve user input and store in databse using post request and promises/async await.
-- posting conditions
+
+##### register route
+
+- conditions for register
   - no empty fields
-  - if email exist reject with err message else post data
+  - if user exist reject with err message else post data (register user).
 
 ##### login route
 
 - conditions for login
   - no empty fields
-  - email must be registered already(invalid details error)
-  - password should be matched
+  - email must be already registered else invalid credentials.
+  - password should be matched(backend password and current password).
+
+##### user authentication
+
+- checking for genuine user by unique id (jwttoken) after login.
+
+  - install jsonwebtoken
+
+  ```shell
+  npm install jsonwebtoken
+  ```
+
+  - generate jwt token and store it in database.
+  - store token in cookies
+  - get token from cookie and verify user.
