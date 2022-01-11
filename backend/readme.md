@@ -59,10 +59,9 @@ app.listen(PORT, () => {
 
 #### UserSchema.js
 
-- creating userSchema and model
-  - define the json data format with schema
+- creating userSchema(user instance) and model
 
-##### password hashing
+- ##### password hashing
 
 - install bcryptjs
 
@@ -72,6 +71,15 @@ npm i bcryptjs
 
 - pre save middleware should be executed to do password hashing and done before calling save method.
 - notes:post save middleware send email when user account is created and done after save method
+
+- ##### token generating
+- install jsonwebtoken
+
+  ```shell
+  npm install jsonwebtoken
+  ```
+
+- token generated and saved back in database.
 
 ### Router
 
@@ -94,25 +102,21 @@ npm i bcryptjs
 
 - conditions for register
   - no empty fields
-  - if user exist reject with err message else post data (register user).
+  - checking for user if exist reject with err message
+  - checking for password and repassword
+- If all condition fullfilled save the new user in databse
 
 ##### login route
 
 - conditions for login
   - no empty fields
-  - email must be already registered else invalid credentials.
-  - password should be matched(backend password and current password).
+  - email must be already registered else invalid credentials
+  - password should be matched(backend password and current password)
 
-##### user authentication
+###### user authentication
 
-- checking for genuine user by unique id (jwttoken) after login.
+- after login checking for genuine user by unique id using jwt
 
-  - install jsonwebtoken
-
-  ```shell
-  npm install jsonwebtoken
-  ```
-
-  - generate jwt token and store it in database.
+  - generate jwt token and store it in database
   - store token in cookies
-  - get token from cookie and verify user.
+  - get token from cookie and verify user

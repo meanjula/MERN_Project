@@ -81,22 +81,24 @@ router.post("/register", async (req, res) => {
     const userExist = await User.findOne({ email: email });
     if (userExist) {
       return res.status(422).json({ error: "email already exist" });
+    } else if (password != repassword) {
+      return res.status(422).json({ error: "password are not matching" });
+    } else {
+      // create user collection
+      const user = new User({
+        first,
+        last,
+        username,
+        email,
+        phone,
+        role,
+        password,
+        repassword,
+      });
+
+      await user.save();
+      res.status(201).json({ message: "registered successfully" });
     }
-
-    // create user collection
-    const user = new User({
-      first,
-      last,
-      username,
-      email,
-      phone,
-      role,
-      password,
-      repassword,
-    });
-
-    await user.save();
-    res.status(201).json({ message: "registered successfully" });
 
     //post save middleware
   } catch (err) {
@@ -124,7 +126,13 @@ router.post("/signin", async (req, res) => {
       // comparing between backend password and currently typed password
       const isMatch = await bcrypt.compare(password, userlogin.password);
       const token = await userlogin.generateAuthToken();
+      console.log(token);
 
+      //token generated stored in cookie with this method(name,value,expiry date,adding place)
+      res.cookie("jwtoken", token, {
+        expires: new Date(Data.now() + 25892000000), //expire after 30 days starting from login time.
+        httpOnly: true, //adding in http
+      });
       if (!isMatch) {
         res.status(400).json({ error: "Invalid credentials " });
       } else {
@@ -137,7 +145,5 @@ router.post("/signin", async (req, res) => {
     console.log(err);
   }
 });
-
-// password hashing()
 
 module.exports = router;
